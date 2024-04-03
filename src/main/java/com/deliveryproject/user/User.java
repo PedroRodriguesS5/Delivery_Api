@@ -6,31 +6,28 @@ import com.deliveryproject.address.Address;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
 @Builder
-@Entity(name = "users")
 @EqualsAndHashCode(of = "id")
+@Table(name = "users")
+@Entity(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column(name = "email",nullable = false,  unique = true)
     private String email;
-
-    private String login;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -47,6 +44,15 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     private UserRole role;
 
+    @Column(name = "created_at")
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDateTime created_at;
+
+    @OneToMany(mappedBy = "users")
+    private Set<Address> addresses;
+
     public User(String email, String password,String name, String phoneNumber, String document){
         this.email = email;
         this.password = password;
@@ -54,13 +60,6 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
         this.document = document;
     }
-
-    @ManyToMany
-    @JoinTable(
-            name= "users_address",
-            joinColumns = @JoinColumn(name = "address_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
-    Set<Address> addresses;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

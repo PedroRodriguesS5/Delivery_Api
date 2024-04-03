@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("auth")
@@ -27,8 +28,18 @@ public class AuthenticationController {
 
     @GetMapping("/users")
     public ResponseEntity getAll(){
-        List<UserResponseDto> getAllUsers = userRepository.findAll().stream().map(UserResponseDto::new).toList();
+        List<UserResponseDto> getAllUsers = this.userRepository.findAll().stream().map(UserResponseDto::new).toList();
         return  ResponseEntity.ok(getAllUsers);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity getUserById(@PathVariable(value = "id") String userId){
+        Optional<User> userById = this.userRepository.findById(userId);
+        if(userById.isEmpty()){
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(userById.stream().map(UserResponseDto::new));
     }
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthenticationDTO data){

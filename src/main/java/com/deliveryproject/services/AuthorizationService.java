@@ -1,7 +1,7 @@
 package com.deliveryproject.services;
 
 import com.deliveryproject.repositories.UserRepository;
-import com.deliveryproject.user.User;
+import com.deliveryproject.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

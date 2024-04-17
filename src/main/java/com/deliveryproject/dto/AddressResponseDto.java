@@ -1,6 +1,6 @@
-package com.deliveryproject.address.dto;
+package com.deliveryproject.dto;
 
-import com.deliveryproject.address.Address;
+import com.deliveryproject.model.Address;
 
 public record AddressResponseDto( String cep, String City,
                                  String neighborhood, String street, String state, Short numberHouse) {

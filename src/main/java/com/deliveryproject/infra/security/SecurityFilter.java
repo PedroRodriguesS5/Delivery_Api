@@ -1,7 +1,7 @@
 package com.deliveryproject.infra.security;
 
 import com.deliveryproject.repositories.UserRepository;
-import com.deliveryproject.user.User;
+import com.deliveryproject.model.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

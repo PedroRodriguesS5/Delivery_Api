@@ -1,12 +1,11 @@
 package com.deliveryproject.controllers.addresscontroller;
 
-import com.deliveryproject.address.Address;
-import com.deliveryproject.address.dto.AddressRequestDto;
-import com.deliveryproject.address.dto.AddressResponseDto;
+import com.deliveryproject.model.Address;
+import com.deliveryproject.dto.AddressRequestDto;
+import com.deliveryproject.dto.AddressResponseDto;
 import com.deliveryproject.repositories.AddressRepository;
 import com.deliveryproject.repositories.UserRepository;
-import com.deliveryproject.user.User;
-import com.deliveryproject.user.dto.UserResponseDto;
+import com.deliveryproject.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +36,7 @@ public class AddressController {
         User userById = this.userRepository.findById(userID).orElseThrow(()->new RuntimeException("Usuário não encontrado"));
 
         if(userById != null){
+            List<Address> existsAddress = this.addressRepository.findAllByUsersId(userID).stream().toList();
         Address newAddress = Address.builder().
                 cep(data.cep())
                 .city(data.city())
@@ -46,6 +46,9 @@ public class AddressController {
                 .numberHouse(data.numberHouse())
                 .users(userById)
                 .build();
+        if(existsAddress.stream().anyMatch(address -> address.getId().equals(newAddress.getId()))){
+            return ResponseEntity.badRequest().body("Endereço já cadastrado");
+        }
         this.addressRepository.save(newAddress);
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();

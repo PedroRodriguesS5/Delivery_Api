@@ -1,11 +1,11 @@
 package com.deliveryproject.controllers.usercontroller;
 
+import com.deliveryproject.dto.AddressRequestDto;
 import com.deliveryproject.infra.security.TokenService;
 import com.deliveryproject.repositories.UserRepository;
-import com.deliveryproject.user.User;
-import com.deliveryproject.user.dto.AuthenticationDTO;
-import com.deliveryproject.user.dto.LoginResponseDTO;
-import com.deliveryproject.user.dto.UserResponseDto;
+import com.deliveryproject.model.User;
+import com.deliveryproject.dto.userDto.AuthenticationDTO;
+import com.deliveryproject.dto.userDto.UserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +36,7 @@ public class AuthenticationController {
     public ResponseEntity getUserById(@PathVariable(value = "id") String userId){
         Optional<User> userById = this.userRepository.findById(userId);
         if(userById.isEmpty()){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Usuário não encontrado");
         }
 
         return ResponseEntity.ok(userById.stream().map(UserResponseDto::new));
@@ -48,7 +48,7 @@ public class AuthenticationController {
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new AddressRequestDto.LoginResponseDTO(token));
     }
 
 }

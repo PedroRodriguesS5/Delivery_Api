@@ -1,4 +1,4 @@
-package com.deliveryproject.user.dto;
+package com.deliveryproject.dto.userDto;
 
 public record AuthenticationDTO(String email, String password)  {
 }

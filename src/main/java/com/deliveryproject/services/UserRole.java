@@ -1,4 +1,4 @@
-package com.deliveryproject.user;
+package com.deliveryproject.services;
 
 public enum UserRole {
     Admin("ADMIN"),

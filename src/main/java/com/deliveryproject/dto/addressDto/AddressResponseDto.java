@@ -1,4 +1,4 @@
-package com.deliveryproject.dto;
+package com.deliveryproject.dto.addressDto;
 
 import com.deliveryproject.model.Address;
 

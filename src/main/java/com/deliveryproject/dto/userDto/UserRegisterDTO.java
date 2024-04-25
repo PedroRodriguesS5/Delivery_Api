@@ -1,12 +1,13 @@
 package com.deliveryproject.dto.userDto;
 
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record UserRegisterDTO(
                                 @Email(message = "Por favor insira um e-mail válido")
-                                @NotBlank(message = "E-mail é obrigatório")
-                                @NotNull(message = "E-mail é obrigatório")
+                                @NotBlank(message = "O campo e-mail é obrigatório")
+                                @NotNull(message = "O campo e-mail é obrigatório")
                                 String email,
 
                                 @NotNull(message = "A senha é obrigatória")
@@ -23,6 +24,7 @@ public record UserRegisterDTO(
                                 @Pattern(regexp = "^\\(?[1-9]{2}\\)? ?(?:[2-8]|9[0-9])[0-9]{3}\\-?[0-9]{4}$",
                                         message = "Por favor insira um telefone válido")
                                 String phoneNumber,
+
 
                                 @CPF(message = "Por favor insira um cpf válido")
                                 @NotBlank(message = "CPF é um campo obrigatório!")

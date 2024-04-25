@@ -1,8 +1,8 @@
 package com.deliveryproject.controllers.addresscontroller;
 
 import com.deliveryproject.model.Address;
-import com.deliveryproject.dto.AddressRequestDto;
-import com.deliveryproject.dto.AddressResponseDto;
+import com.deliveryproject.dto.addressDto.AddressRequestDto;
+import com.deliveryproject.dto.addressDto.AddressResponseDto;
 import com.deliveryproject.repositories.AddressRepository;
 import com.deliveryproject.repositories.UserRepository;
 import com.deliveryproject.model.User;

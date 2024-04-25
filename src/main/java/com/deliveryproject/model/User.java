@@ -3,6 +3,7 @@ import com.deliveryproject.services.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,6 +41,7 @@ public class User implements UserDetails{
     @Column(name = "phoneNumber", unique = true, nullable = false, updatable = true)
     private String phoneNumber;
 
+
     @Column(name = "document", unique = true, nullable = false)
     private String document;
 
@@ -74,17 +76,6 @@ public class User implements UserDetails{
 
 
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationException(MethodArgumentNotValidException ex){
-        Map<String, String> errors= new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error)->{
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
-    }
     @Override
     public String getUsername() {
         return null;

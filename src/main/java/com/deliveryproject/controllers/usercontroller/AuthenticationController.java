@@ -1,6 +1,8 @@
 package com.deliveryproject.controllers.usercontroller;
 
-import com.deliveryproject.dto.AddressRequestDto;
+import com.deliveryproject.dto.addressDto.AddressRequestDto;
+import com.deliveryproject.dto.userDto.LoginResponseDTO;
+import com.deliveryproject.exceptions.UserNotFoundException;
 import com.deliveryproject.infra.security.TokenService;
 import com.deliveryproject.repositories.UserRepository;
 import com.deliveryproject.model.User;
@@ -36,7 +38,7 @@ public class AuthenticationController {
     public ResponseEntity getUserById(@PathVariable(value = "id") String userId){
         Optional<User> userById = this.userRepository.findById(userId);
         if(userById.isEmpty()){
-            return ResponseEntity.badRequest().body("Usuário não encontrado");
+            throw new UserNotFoundException();
         }
 
         return ResponseEntity.ok(userById.stream().map(UserResponseDto::new));
@@ -48,7 +50,7 @@ public class AuthenticationController {
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new AddressRequestDto.LoginResponseDTO(token));
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
 }

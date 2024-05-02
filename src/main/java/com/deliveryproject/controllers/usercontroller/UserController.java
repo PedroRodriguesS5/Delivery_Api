@@ -40,11 +40,11 @@ public class UserController {
                 email(data.email()).
                 name(data.name()).
                 document(data.document()).
-                password(encryptedPass).
+                 password(encryptedPass).
                 phoneNumber(data.phoneNumber()).role(UserRole.valueOf("User"))
                 .build();
         this.userRepository.save(newUser);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Usuário cadastrado com sucesso");
         }catch (DataIntegrityViolationException e) {
             if (e.getMostSpecificCause().getClass().getName().equals("org.postgresql.util.PSQLException") && ((SQLException)
                     e.getMostSpecificCause()).getSQLState().equals("23505"))

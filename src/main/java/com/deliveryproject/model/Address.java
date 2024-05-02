@@ -1,11 +1,12 @@
 package com.deliveryproject.model;
 
-import com.deliveryproject.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -51,4 +52,6 @@ public class Address {
     @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
     private User users;
+
+    private LocalDateTime created_at;
 }
